@@ -4,7 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Love Story 💖</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Body Styling --- */
+        body {
+            font-family: 'Cursive', sans-serif;
+            background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+        }
+
+        /* Floating Hearts & Sparkles */
+        .heart, .sparkle {
+            position: absolute;
+            top: -10vh;
+            opacity: 0.8;
+            filter: brightness(1.5);
+        }
+        .heart {
+            width: 30px;
+            height: 30px;
+            background: red;
+            transform: rotate(-45deg);
+            animation: fall 10s linear infinite;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before { top: -15px; left: 0; }
+        .heart::after { top: 0; left: 15px; }
+        .sparkle {
+            width: 5px;
+            height: 5px;
+            background: gold;
+            animation: fall 6s linear infinite;
+            border-radius: 50%;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0px) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+        }
+
+        /* Book Design */
+        .book {
+            position: relative;
+            width: 320px;
+            height: 270px;
+            perspective: 1000px;
+            margin: auto;
+        }
+
+        /* Page Styling */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 1s ease-in-out;
+            backface-visibility: hidden;
+        }
+
+        /* Hide Pages Initially */
+        #page2, #page3, #page4 {
+            transform: rotateY(180deg);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Buttons */
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ff1a1a;
+            transform: scale(1.1);
+        }
+
+        /* Floating Text */
+        #floating-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: red;
+            text-shadow: 0 0 8px pink;
+            animation: glow 3s infinite alternate;
+        }
+
+        /* Glowing Animation */
+        @keyframes glow {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* Love Page Styling */
+        #love-page {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        /* Fireworks Animation */
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            animation: fireworkAnimation linear infinite;
+        }
+        @keyframes fireworkAnimation {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-100px) scale(1.5); opacity: 0.7; }
+            100% { transform: translateY(-200px) scale(2); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
 
@@ -42,7 +178,7 @@
                 my peace in a busy world,  
                 and my dream that came true. ☀️💖  
             </p>
-            <button onclick="flipBack(1)">⬅️ Back</button>
+            <button onclick="flipBack(0)">⬅️ Back</button>
             <button onclick="flipPage(2)">Next ➡️</button>
         </div>
 
@@ -59,18 +195,49 @@
                 <b>Forever Yours,</b>  
                 <b>Gulshan ❤️</b>  
             </p>
-            <button onclick="flipBack(2)">⬅️ Back</button>
+            <button onclick="flipBack(1)">⬅️ Back</button>
             <button onclick="flipPage(3)">Next ➡️</button>
         </div>
 
         <div class="page" id="page4">
             <h2>Sealed with a Kiss 💋</h2>
-            <img src="https://i.pinimg.com/originals/44/90/60/4490606ef442885d9224bc8215d1ca9a.gif" width ="200px" alt="Couple Kissing" id="love-image">
+            <img src="https://i.pinimg.com/originals/44/90/60/4490606ef442885d9224bc8215d1ca9a.gif" width="200px" alt="Couple Kissing">
             <p>With every kiss, my love for you grows stronger. 💞</p>
-            <button onclick="flipBack(3)">⬅️ Back</button>
+            <button onclick="showLovePage()">Yes, I Love You ❤️</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Love Page (Initially Hidden) -->
+    <div id="love-page">
+        <h1>Our Love is Forever ❤️</h1>
+        <img src="https://i.pinimg.com/originals/6f/69/61/6f69613f8340b19fbb4c338208b34721.gif" width="400px" alt="Romantic Couple">
+        <div id="fireworks-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const pages = document.querySelectorAll(".page");
+            let currentPage = 0;
+
+            window.flipPage = function (pageNumber) {
+                pages[currentPage].style.transform = "rotateY(-180deg)";
+                pages[pageNumber].style.transform = "rotateY(0deg)";
+                currentPage = pageNumber;
+            };
+
+            window.flipBack = function (pageNumber) {
+                pages[currentPage].style.transform = "rotateY(180deg)";
+                pages[pageNumber].style.transform = "rotateY(0deg)";
+                currentPage = pageNumber;
+            };
+        });
+
+        function showLovePage() {
+            document.querySelector('.book').style.display = "none";
+            document.getElementById('love-page').style.display = "block";
+        }
+    </script>
+
 </body>
-</html>
+    </html>
+    

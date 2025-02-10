@@ -1,0 +1,190 @@
+/* --- Body Styling --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6e6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- Floating Hearts Animation (Slow Leaf-Like Motion) --- */
+@keyframes fall {
+    0% { transform: translateY(-10vh) translateX(0px) rotate(0deg); opacity: 0; }
+    25% { transform: translateY(25vh) translateX(-20px) rotate(10deg); opacity: 1; }
+    50% { transform: translateY(50vh) translateX(20px) rotate(-10deg); }
+    75% { transform: translateY(75vh) translateX(-15px) rotate(5deg); }
+    100% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+}
+
+.heart {
+    position: absolute;
+    top: -10vh;
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    transform: rotate(-45deg);
+    animation: fall 8s linear infinite;
+}
+
+.heart::before, .heart::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.heart::before { top: -15px; left: 0; }
+.heart::after { top: 0; left: 15px; }
+
+/* --- Proposal Box Styling --- */
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Buttons Styling --- */
+button {
+    font-size: 18px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* --- YES Button --- */
+#yes-button {
+    background-color: #ff4d4d;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 5px 10px rgba(255, 0, 0, 0.3);
+}
+
+#yes-button:hover {
+    background-color: #ff1a1a;
+    transform: scale(1.1);
+}
+
+/* --- NO Button (Funny Moving) --- */
+#no-button {
+    position: absolute;
+    background-color: #999;
+    color: white;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* --- Funny Text Change Effect --- */
+h2:hover {
+    transform: scale(1.1);
+}
+
+body {
+    background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+    text-align: center;
+    font-family: 'Cursive', sans-serif;
+}
+
+/* Book Design */
+.book {
+    position: relative;
+    width: 320px;
+    height: 270px;
+    perspective: 1000px;
+    margin: auto;
+}
+
+/* Page Styling */
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 1s ease-in-out;
+    backface-visibility: hidden;
+}
+
+/* Hide Pages Initially */
+#page2, #page3, #page4 {
+    transform: rotateY(180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Buttons */
+button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #ff1a1a;
+}
+
+/* Floating Text */
+#floating-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+    text-shadow: 0 0 8px pink;
+    animation: glow 3s infinite alternate;
+}
+
+/* Glowing Animation */
+@keyframes glow {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+/* Floating Hearts */
+.heart {
+    position: absolute;
+    top: -10vh;
+    width: 30px;
+    height: 30px;
+    background: red;
+    transform: rotate(-45deg);
+    animation: fall 10s linear infinite;
+    filter: brightness(1.5);
+}
+
+/* Falling Sparkles */
+.sparkle {
+    position: absolute;
+    top: -10vh;
+    width: 5px;
+    height: 5px;
+    background: gold;
+    animation: fall 6s linear infinite;
+    border-radius: 50%;
+}
+
+/* Falling Animation */
+@keyframes fall {
+    to { top: 100vh; opacity: 0; }
+}
